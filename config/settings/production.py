@@ -6,7 +6,7 @@ from .base import env
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["oneheritagefinance.com"])
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["oneheritagefinance.com, www.oneheritagefinance.com"])
 
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ EMAIL_HOST = env("EMAIL_HOST", default="smtp.gmail.com")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="mail@gmail.com")  # sendgrid
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="Paper123.")
 EMAIL_PORT = env("EMAIL_HOST_PORT", default="465")
-# EMAIL_USE_SSL = True
+EMAIL_USE_SSL = True
 EMAIL_USE_TLS = True
 
 
