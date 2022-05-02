@@ -10,6 +10,7 @@ from django.db.models import (
     DateField,
     DecimalField,
     FileField,
+    TextField,
     ForeignKey,
     ImageField,
     IntegerField,
@@ -22,7 +23,7 @@ from django.db.models import (
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
-from tinymce import HTMLField
+# from tinymce import HTMLField
 
 from oneheritagefinance.users.models import Account
 
@@ -374,7 +375,7 @@ class Debit(TimeStampedModel):
         validators=[MinValueValidator(Decimal("10.00"))],
     )
 
-    purpose = HTMLField(_("Purpose for transaction"))
+    purpose = TextField(_("Purpose for transaction"))
 
     recipients_bank = CharField(_("Recipients Bank Name"), max_length=500, blank=True)
     recipients_bank_swift = CharField(
@@ -434,7 +435,7 @@ class AccountHistory(TimeStampedModel):
     )
     user = ForeignKey(User, related_name="history", on_delete=DO_NOTHING)
     transfer_type = CharField(max_length=50, choices=TRANS_TYPE, default=DEPOSIT)
-    purpose = HTMLField(_("Purpose for transaction"))
+    purpose = TextField(_("Purpose for transaction"))
     status = CharField(
         _("Transaction Status"),
         max_length=15,

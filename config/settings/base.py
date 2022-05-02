@@ -92,7 +92,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
-    "tinymce",
+    # "tinymce",
     "filebrowser",
     "admin_honeypot",
     "django.contrib.auth",
@@ -119,7 +119,7 @@ THIRD_PARTY_APPS = [
     # image resize automatic
     "stdimage",
     "countries_plus",
-    "tinymce",
+    # "tinymce",
     "localflavor",
     "rosetta",
     "parler",
