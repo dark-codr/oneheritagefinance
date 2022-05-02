@@ -119,6 +119,7 @@ THIRD_PARTY_APPS = [
     # image resize automatic
     "stdimage",
     "countries_plus",
+    "tinymce",
     "localflavor",
     "rosetta",
     "parler",
