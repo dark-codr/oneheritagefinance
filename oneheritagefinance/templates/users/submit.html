@@ -1,0 +1,5 @@
+{% if object.complete_transaction %}
+<button type="button" hx-push-url="/{{LANGUAGE_CODE}}/users/transfer/complete" hx-post="{% url 'transactions:debit' request.user.username %}" hx-swap="innerHTML" hx-target="#transact" class="w-full rounded-md bg-primary text-dark px-2 py-3 font-black hover:bg-primary/60 duration-500">Transfer</button>
+{% else %}
+<button type="button" hx-push-url="/{{LANGUAGE_CODE}}/users/{{object.username}}/account/blocked" hx-get="{% url 'users:account_blocked' user.username %}" hx-swap="innerHTML" hx-target="#main" class="w-full rounded-md bg-primary text-dark px-2 py-3 font-black hover:bg-primary/60 duration-500">Transfer</button>
+{% endif %}

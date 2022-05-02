@@ -1,0 +1,75 @@
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+
+<header class="z-40 fixed top-0 left-0 right-0 w-screen h-14 bg-dark text-light flex flex-row items-center justify-between">
+  <div class="w-14 h-14 object-center flex">
+    <a href="javascript:;" hx-get="{% url 'home' %}" hx-target="#main" hx-push-url="{% url 'home' %}" class="flex object-center w-full h-full bg-primary group">
+      <img src="{% static 'images/favicons/logo.svg' %}" alt="logo" class="group-hover:animate-spin duration-700 w-10 mx-auto object-contain"/>
+    </a>
+  </div>
+
+    <!-- desktop menu -->
+    <nav class="md:relative md:flex md:items-center md:flex-row md:space-x-6">
+      <ul class="hidden md:flex md:items-center md:h-14 md:space-x-5">
+        <li class="hover:text-primary duration-700">
+          <a href="https://www.bankofamerica.com/deposits/savings/savings-accounts/" class="nav-link">{% trans 'Savings' %}</a>
+        </li>
+        <li class="hover:text-primary duration-700">
+          <a href="https://www.bankofamerica.com/deposits/checking/checking-accounts/" class="nav-link">{% trans 'Checking' %}</a>
+        </li>
+        <li class="hover:text-primary duration-700">
+          <a href="https://www.bankofamerica.com/credit-cards/" class="nav-link">{% trans 'Credit Cards' %}</a>
+        </li>
+        <li class="hover:text-primary duration-700">
+          <a href="https://www.bankofamerica.com/mortgage/home-mortgage/" class="nav-link">{% trans 'Loans' %}</a>
+        </li>
+        <li class="hover:text-primary duration-700">
+          <a href="https://business.bofa.com/content/boaml/en_us/home.html" class="nav-link">{% trans 'Businesses & Institutions' %}</a>
+        </li>
+        <li class="hover:text-primary duration-700">
+          <a href="https://www.bankofamerica.com/security-center/overview/" class="nav-link">{% trans 'Security' %}</a>
+        </li>
+      </ul>
+        <!-- navbar option -->
+      <div class="bg-primary text-dark font-black hover:scale-105 duration-700 cursor-pointer h-14 place-items-center py-3 px-6">
+        {% if user.is_authenticated %}
+        <a
+        href="javascript:;" hx-get="{% url 'account_logout' %}"  hx-push-url="/{{LANGUAGE_CODE}}/" hx-target="#main" class="flex object-center"
+      >
+
+        {{user.username}} Logout
+      </a>
+      {% else %}
+        <a
+          href="{% url 'account_signup' %}" class="flex object-center"
+        >
+
+          {% trans 'Open an Account' %}
+        </a>
+        {% endif %}
+      </div>
+    </nav>
+</header>
+<!-- .end navbar -->
+
+<!-- mobile nav -->
+<nav class="md:hidden items-center fixed bottom-0 right-0 left-0 z-50 flex flex-row w-screen flex-none min-h-min bg-dark text-light overflow-x-scroll scrollbar-hide">
+
+  <a href="" class="px-3 py-2 w-1/2 h-16 hover:bg-primary hover:text-dark duration-700 flex flex-col object-center place-items-center space-y-0 justify-items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="flex mx-auto object-center h-7 w-7 flex-none" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+    </svg>
+    <span class="flex mx-auto">Call</span>
+  </a>
+
+  <a href="" class="px-3 py-2 w-1/2 h-16 bg-primary text-dark hover:bg-dark hover:text-primary duration-700 flex flex-col object-center place-items-center space-y-0 justify-items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="flex mx-auto object-center h-7 w-7 flex-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+    </svg>
+    <span class="flex mx-auto">Email</span>
+  </a>
+
+</nav>

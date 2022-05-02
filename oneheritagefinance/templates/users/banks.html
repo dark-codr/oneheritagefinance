@@ -1,0 +1,17 @@
+<div class="w-full space-y-4">
+<select title="recipient bank" name="res_bank" class="w-full flex">
+  <option selected>Select Local Bank</option>
+  {% for obj in banks %}
+  <option value="{{obj}}" class="text-white">{{obj}}</option>
+  {% endfor %}
+</select>
+
+<input type="number" placeholder="Recipient Account Number" name="res_account" class="w-full flex" hx-get="{% url 'transactions:check_racc' %}" hx-swap="innerHTML" hx-target="#acc_res" hx-trigger="keyup changed delay:1s">
+<!-- <select title="Recipient Account Number" name="res_account" class="w-full flex" >
+  <option selected>Select Recipient Account</option>
+  {% for obj in accounts %}
+  <option value="{{obj.acc_no}}" class="text-white">{{obj.acc_no}} - {{obj.currency}}</option>
+  {% endfor %}
+</select> -->
+</div>
+<p class="text-sm text-blue-300 font-bold" id="acc_res"></p>

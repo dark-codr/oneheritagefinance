@@ -1,0 +1,64 @@
+{% load i18n static %}
+
+{% load static i18n %}
+
+<footer class="px-6 md:px-14 pt-16 pb-24 md:pt-16 md:pb-16 relative font-raleway w-screen h-min md:flex md:items-start md:space-x-6 border-t-2 border-t-light bg-body">
+  <section class="md:w-1/4 h-full flex-none space-y-10 flex-col items-center justify-between">
+    <div class="flex flex-col space-y-4 w-full h-min">
+      <div class="flex items-center">
+        <h4 class="text-2xl font-black md:text-4xl">OHFinance</h4>
+      </div>
+      <div class="flex items-center space-x-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dark flex-none" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+        </svg>
+        <div class="space-y-1 border-l-2 border-l-variant-1 pl-2">
+          <a href="tel:+18746374736" class="text-base font-semibold">+18746374736</a>
+          <p class="text-dark text-xs">Business Hours: <span class="font-black text-dark ">9:00 am - 5:00 pm</span> EST</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dark flex-none" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+        </svg>
+        <div class="space-y-1 border-l-2 border-l-variant-1 pl-2">
+          <a href="https://www.google.com/maps/place/Central+Business+District,+Saskatoon,+SK,+Canada/@52.1506017,-106.8044957,11z/data=!4m13!1m7!3m6!1s0x5304f6bf47ed992b:0x5049e3295772690!2sSaskatoon,+SK,+Canada!3b1!8m2!3d52.157902!4d-106.6701577!3m4!1s0x5304f6d124cfdef9:0xd98b9e48c2cbd50!8m2!3d52.129106!4d-106.6655514" class="block text-base font-semibold">
+            Central Business District
+            Saskatoon, SK
+            Canada.
+          </a>
+          <a href="" class="block text-dark text-xs hover:text-light  duration-700">Other Offices</a>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dark flex-none" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+        </svg>
+        <div class="space-y-1 border-l-2 border-l-variant-1 pl-2">
+          <a href="mailto:hello@oneheritagefinance.com" class="block text-base font-semibold hover:text-light duration-700">hello@oneheritagefinance.com</a>
+          <a href="mailto:support@oneheritagefinance.com" class="block text-dark text-xs hover:text-light  duration-700">support@oneheritagefinance.com</a>
+        </div>
+      </div>
+    </div>
+    <p class="block">© <span x-text="new Date().getFullYear()" class="text-dark font-black"></span> OHFinance <a href="" class="border-l-2 border-l-dark text-dark hover:text-light duration-700 pl-4 ml-4 font-bold">Privacy & Terms</a></p>
+  </section>
+  <section class="hidden md:block md:w-1/4 flex-grow space-y-4 flex-col items-center justify-between">
+    <h4 class="text-2xl font-black border-b-variant-1 border-b-2 mb-8 w-2/3">{% trans "Indemnification" %}</h4>
+    Investing in securities involves risks, and there is always the potential of losing money when you invest in securities. You should review any planned financial transactions that may have tax or legal implications with your personal tax or legal advisor.
+    <br>
+    <br>
+    Securities products are provided by Merrill Lynch, Pierce, Fenner & Smith Incorporated (also referred to as "MLPF&S", or "Merrill"), a registered broker-dealer, registered investment adviser, Member SIPC layer, and a wholly-owned subsidiary of Bank of America Corporation. MLPF&S makes available certain investment products sponsored, managed, distributed or provided by companies that are affiliates of Bank of America Corporation.
+    <br>
+    <br>
+    One Heritage Finance is an affiliate of Bank of America, N.A., Member FDIC and a wholly owned Corporation. Trust and fiduciary services are provided by Bank of America, N.A. and U.S. Trust Company of Delaware. Both are indirect subsidiaries of Bank of America Corporation.
+    <br>
+    <br>
+    Insurance Products are offered through Merrill Lynch Life Agency Inc. (MLLA) and/or Banc of America Insurance Services, Inc., both of which are licensed insurance agencies and wholly-owned subsidiaries of Bank of America Corporation.
+    <br>
+    <br>
+    Banking, credit card, automobile loans, mortgage and home equity products are provided by Bank of America, N.A. and affiliated banks, Members FDIC and wholly owned subsidiaries of Bank of America Corporation. Credit and collateral are subject to approval. Terms and conditions apply. This is not a commitment to lend. Programs, rates, terms and conditions are subject to change without notice.
+    <br>
+    <br>
+</section>
+</footer>

@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/home/edavids/Env/oneheritagefinance-oANV4Bvm/bin/python",
+    "python.formatting.provider": "black",
+    "python.linting.pylintEnabled": true
+}

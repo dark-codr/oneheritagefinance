@@ -1,0 +1,118 @@
+{% load static i18n compress %}
+
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+{% get_language_info_list for LANGUAGES as languages %}
+
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}"  class="overflow-y-scroll overflow-x-hidden max-w-[100vw] min-h-screen">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}OneHeritageFinance{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OneHeritageFinance Online Banking System Here to help you manage your financial assets from anywhere in the world">
+    <meta name="author" content="Frank Cosgrove">
+    <meta name="keywords" content="OneHeritageFinance,Online Banking System,financial assets">
+
+    <link rel="icon" href="{% static 'images/favicons/logo.svg' %}" type="image/svg" sizes="16x16">
+
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&family=Poiret+One&family=Raleway:ital,wght@0,100;0,200;0,300;0,500;0,600;0,700;0,800;1,100;1,200&display=swap" rel="stylesheet">
+
+    {% block css %}
+      <!-- Your stuff: Third-party CSS libraries go here -->
+
+      {% compress css %}
+      <!-- This file stores project-specific CSS -->
+      <link href="{% static 'css/project.css' %}" rel="preload" as="style">
+      <link href="{% static 'css/project.css' %}" rel="stylesheet">
+      {% endcompress %}
+
+      <link href="{% static 'css/iziToast.min.css' %}" rel="preload" as="style">
+      <link href="{% static 'css/iziToast.min.css' %}" rel="stylesheet">
+    {% endblock %}
+    <!-- Le javascript
+    ================================================== -->
+    {# Placed at the top of the document so pages load faster with defer #}
+    {% block javascript %}
+      <!-- Your stuff: Third-party javascript libraries go here -->
+      <script src="https://unpkg.com/htmx.org@1.6.1" integrity="sha384-tvG/2mnCFmGQzYC1Oh3qxQ7CkQ9kMzYjWZSNtrRZygHPDDqottzEJsqS4oUVodhW" crossorigin="anonymous"></script>
+
+      <!-- alpinejs -->
+      <script src="https://unpkg.com/alpinejs@3.9.5/dist/cdn.min.js"></script>
+
+      <script src="https://kit.fontawesome.com/cb5449eda5.js" crossorigin="anonymous"></script>
+      <!-- place project specific Javascript in this file -->
+      {% compress js %}
+      <script src="{% static 'js/project.js' %}"></script>
+      {% endcompress %}
+
+      <script src="{% static 'js/iziToast.min.js' %}"></script>
+
+    {% endblock javascript %}
+
+    {{form.media}}
+
+  </head>
+
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="main" class="scrollbar-hide flex flex-col min-w-[100vw] max-w-[100vw] min-h-screen flex-none">
+
+    {% block navbar %}
+    {% include 'snippets/nav.html' %}
+    {% endblock navbar %}
+
+    <main class="relative max-w-full min-h-screen">
+      {% block content %}
+      {% endblock content %}
+    </main>
+
+    {% block footer %}
+    {% include 'snippets/footer.html' %}
+    {% endblock footer %}
+
+
+    {% block modal %}{% endblock modal %}
+
+    {% block inline_javascript %}
+    {% comment %}
+    Script tags with only code, no src (defer by default). To run
+    with a "defer" so that you run inline code:
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {/* Run whatever you want */});
+    </script>
+    {% endcomment %}
+    {% endblock inline_javascript %}
+
+    {% for message in messages %}
+    <script type=text/javascript>
+      iziToast.settings({
+        timeout: 5000,
+        resetOnHover: true,
+        position: 'topRight',
+        drag: true,
+        pauseOnHover: true,
+        transitionIn: 'fadeInUp',
+        transitionOut: 'fadeOutDown',
+        transitionInMobile: 'fadeInUp',
+        transitionOutMobile: 'fadeOutDown',
+        close: true,
+        displayMode: "replace",
+        progressBar: true,
+        progressBarEasing: 'ease',
+        color: '{% if message.tags == "alert-success" %}green{% elif message.tags == "alert-warning" %}yellow{% elif message.tags == "alert-info" %}blue{% else %}red{% endif %}'
+        icon: '{% if message.tags == "alert-success" %}fa-solid fa-thumbs-up{% elif message.tags == "alert-warning" %}fa-solid fa-triangle-exclamation{elif message.tags == "alert-info"}fa-solid fa-circle-info{% else %}fa-solid fa-bug{% endif %}',
+      });
+      //iziToast.{{ message.tags }}({
+      iziToast.show({
+          balloon: true,
+          layout: 2,
+          id: '{{ message.tags }}',
+          title: '{{ message.tags|capfirst }}',
+          message: '{{ message }}',
+      });
+    </script>
+    {% endfor %}
+  </body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Account Blocked - {{ block.super }}{% endblock title %}
+
+{% block content %}
+<div class="pt-28 pb-10 min-w-[100vw] h-screen justify-center">
+
+  <div class="max-w-md w-full flex flex-col object-center space-y-8 mx-auto my-auto px-10 md:px-4 py-10">
+    <div class="flex flex-col object-center">
+      <a href="/"><img class="mx-auto h-12 w-auto animate-bounce" src="{% static 'images/favicons/logo.svg' %}" alt="logo"></a>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-dark">Account Blocked</h2>
+      <p class="mt-2 text-center text-xl ">
+        This is due to some suspicious transactions from your account.
+        <a href="mailto:noreply@oneheritagefinance.com" class="font-medium text-blue-400 hover:text-blue-600"> Contact Support </a>
+      </p>
+    </div>
+    <button hx-get="{% url 'users:detail' request.user.username %}" hx-push-url="{% url 'users:detail' request.user.username %}" hx-target="#main" type="button" class="primaryAction group relative w-full flex justify-center py-2 px-4 border border-transparent text-xl font-bold rounded-md text-dark bg-primary hover:bg-primary/60 focus:outline-none focus:ring-0 focus:shadow-primary hover:shadow-primary">
+      <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+        <!-- Heroicon name: solid/lock-closed -->
+        <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+        </svg>
+      </span>
+      {% translate "Return to Profile" %}
+    </button>
+
+  </div>
+
+</div>
+{% endblock %}

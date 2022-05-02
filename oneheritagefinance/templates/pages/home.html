@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block css %}
+<link rel="preload" as="style" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+{{ block.super }}
+{% endblock css %}
+
+{% block javascript %}
+{{ block.super }}
+<script defer src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+{% endblock javascript %}
+
+
+{% block content %}
+<section class="relative w-screen h-screen bg-dark flex-none md:flex md:items-start px-8 md:px-0 object-center pt-20" style="background-image: url({% static 'images/hero/bankbuilding.jpg' %}); background-position: center;">
+  <div class="z-30 w-full flex flex-col md:w-1/5 h-min pb-7 px-6 bg-dark text-light rounded-t-md object-center my-auto md:ml-14 pt-14">
+    {% if not request.user.is_authenticated %}
+    <h2 class="font-black text-3xl">Login to Account</h2>
+    <form class="w-full h-min space-y-6">
+      {% csrf_token %}
+      <div class="w-full h-7 rounded-md flex-col">
+        <input class="w-full rounded-md ring-1 focus:ring-2 focus:ring-primary focus:outline-2 focus:outline-primary" type="email" id="email" name="email" placeholder="name@mail.com">
+      </div>
+      <div class="w-full h-7 rounded-md flex-col">
+        <input class="w-full rounded-md ring-1 focus:ring-2 focus:ring-primary focus:outline-2 focus:outline-primary" type="password" id="password" name="password" placeholder="*************">
+      </div>
+
+      <button hx-push-url="/{{LANGUAGE_CODE}}/users/" hx-post="{% url 'users:login' %}" hx-swap="innerHTML" hx-target="#main" class="w-full rounded-md bg-primary text-dark px-2 py-3 font-black hover:bg-primary/60 duration-700">{% trans "Login to Account" %}</button>
+
+      <div class="border-t-2 border-primary pt-6 w-full h-min space-y-4 text-center">
+        <h4 class="text-xl font-black text-p">OR</h4>
+        <a href="{% url 'account_signup' %}" class="text-primary font-black block">Open an Account</a>
+      </div>
+    </form>
+    {% else %}
+    <h2 class="font-black text-3xl">Welcome Back</h2>
+    <button hx-push-url="/{{LANGUAGE_CODE}}/users/{{user.username}}" hx-get="{% url 'users:detail' user.username %}" hx-swap="innerHTML" hx-target="#main" class="w-full rounded-md bg-primary text-dark px-2 py-3 font-black hover:bg-primary/60 duration-700">{% trans "Return to Account" %}</button>
+    {% endif %}
+  </div>
+  <div class="hidden flex-grow z-30 items-center md:flex flex-col h-full object-center place-content-center">
+    <div class="flex items-start w-2/3">
+      <img src="{% static 'images/cards.png' %}" alt="apply for cards" class="h-[40vh] flex object-center">
+      <div class="flex flex-col bg-dark/50 p-6 space-y-6">
+        <h3 class="text-2xl text-primary font-black">Choose the card that works for you</h3>
+        <p class="text-light">With OHFinance Credit Cards, you save 0% intro APR offer, plus no annual fee attached to any of your purchases.</p>
+        <a href="" class="text-primary font-bold hover:text-body duration-700">{% trans "Learn More" %}</a>
+      </div>
+    </div>
+  </div>
+  <div class="absolute left-0 right-0 top-0 bottom-0 bg-dark/60 -z-10 md:z-0 w-full h-full"></div>
+</section>
+
+<section class="md:flex w-screen md:h-[25%] relative">
+  <div class="py-6 px-7 bg-gradient-to-br h-[30vh] from-body to-light w-full md:w-1/4">
+    <h4 class="font-black text-dark text-2xl">{% trans "Open a Checking Account" %}</h4>
+    <p class="text-sm text-dark">{% trans "Consider the benefits of opening a OHFinance bank account, an Advantage Banking" %}</p>
+    <a href="{% url 'account_signup' %}" class="block pt-8 text-dark font-black hover:text-red-500 duration-700">{% trans "Open a Checking Account" %}</a>
+  </div>
+  <div class="py-6 px-7 bg-gradient-to-br h-[30vh] from-primary to-light w-full md:w-1/4">
+    <h4 class="font-black text-dark text-2xl">{% trans "Working together to create jobs for our communities" %}</h4>
+    <p class="text-sm text-dark">{% trans "We are partnering with the Bank of America, schools and local employers to build skills, increase hiring and fuel economic opportunity." %}</p>
+    <a href="https://about.bankofamerica.com/en/making-an-impact/job-creation-supporting-skills-training/?cm_sp=EBZ-EnterpriseBrand-_-NotAssigned-_-EBT1SX9401_SuperHighlights_JobSkills2021_Default_lbiSHLCta" class="block pt-8 text-dark font-black hover:text-red-500 duration-700">{% trans "Learn More" %}</a>
+  </div>
+  <div class="py-6 px-7 bg-gradient-to-br h-[30vh] from-blue-200 to-light w-full md:w-1/4">
+    <h4 class="font-black text-dark text-2xl">{% trans "Invest your way" %}</h4>
+    <p class="text-sm text-dark">{% trans "We have the tools, the people, the right partnerships and the insight to help you create a personalized strategy to pursue your goals." %}</p>
+    <a href="https://www.merrill.com/?cm_sp=GWM-SelfDirectedBrokerage-_-Default-_-G2T1QVWD01_Highlights_NH_Merrill_InvestYourWay_DefaultDefault_HL4_investYourWayHlCta" class="block pt-8 text-dark font-black hover:text-red-500 duration-700">{% trans "Get started" %}</a>
+  </div>
+  <div class="py-6 px-7 bg-gradient-to-br h-[30vh] from-light to-orange-300 w-full md:w-1/4">
+    <h4 class="font-black text-dark text-2xl">{% trans "OHFinance Deals" %}</h4>
+    <p class="text-sm text-dark">{% trans "Get cash back offers on shopping, dinning, streaming and more with OHFinance Deals" %}</p>
+    <a href="" class="block pt-8 text-dark font-black hover:text-red-500 duration-700">{% trans "Check Deals Now" %}</a>
+  </div>
+</section>
+
+<section class="py-10 px-14">
+  <h3 class="font-black md:text-4xl text-2xl">Financial Guidance for every stage of life</h3>
+  <p class="text-sm">Better Money Habits® is here to help with your decisions along the way.</p>
+
+  <div class="w-full h-min py-6 md:flex md:items-start md:pt-10 md:space-x-4 space-y-4 md:space-y-0">
+    <a href="https://bettermoneyhabits.bankofamerica.com/en/saving-budgeting/simple-saving-tools?cm_mmc=EBZ-FinancialEducation-_-Module-Ad-_-EF16LT00CZ_BMH_Homepage-Tile-1-_-BAC.com-Education-Tiles" class="flex flex-col relative overflow-hidden w-full md:w-1/4 group cursor-pointer">
+      <img src="{% static 'images/savings.jpg' %}" alt="savings" class="duration-700 w-full object-contain group-hover:scale-105">
+      <div class="absolute bottom-6 right-0 left-0 bg-dark/60 duration-700 group-hover:bg-dark/80 flex items-center p-4 w-[90%] mx-auto space-x-4 text-primary rounded-md">
+        <svg width="75px" height="75px" viewBox="0 0 75 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>piggy-bank-icon</title>
+          <g id="piggy-bank-icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="icons/finance/cashflow-copy">
+                  <g id="Group" fill="#FFFFFF" opacity="0">
+                      <g id="icon-bounding-box">
+                          <rect id="Ø-library-elements/Icons/icon-bounding-box" x="0" y="0" width="75" height="75"/>
+                      </g>
+                  </g>
+                  <g id="nested-icon">
+                      <g id="Group" fill="#FFFFFF" opacity="0">
+                          <g id="icon-bounding-box">
+                              <rect id="Ø-library-elements/Icons/icon-bounding-box" x="0" y="0" width="75" height="75"/>
+                          </g>
+                      </g>
+                      <path d="M57.7625,13.46875 L56.96875,24.803125 C60.6277192,27.4696233 63.3483769,31.2262532 64.740625,35.534375 L64.740625,35.534375 L70.303125,36.775 L70.24375,47.190625 L63.721875,48.38125 C61.4856545,52.7893634 57.9342518,56.3931852 53.559375,58.69375 L53.559375,58.69375 L57.1875,64.821875 L47.903125,70.08125 L43.2375,62.203125 C39.3495824,62.8348189 35.383374,62.8115814 31.503125,62.134375 L31.503125,62.134375 L26.75,69.946875 L17.5,64.5875 L21.184375,58.51875 C14.929165,55.3492057 10.6059255,49.3358349 9.59375,42.396875 C8.47151961,42.3856263 7.38300567,42.0118265 6.490625,41.33125 C5.23569475,40.2483041 4.56317571,38.6381939 4.675,36.984375 L4.675,36.984375 L7.8,37 C7.790625,38.3625 8.296875,38.771875 8.4625,38.90625 C8.77673385,39.1442184 9.15616753,39.2805092 9.55,39.296875 C10.3889867,32.0199718 14.8880464,25.6762623 21.478125,22.478125 C21.865625,22.253125 22.321875,22.0375 22.753125,21.853125 L22.753125,21.853125 L24.003125,24.721875 C23.65625,24.871875 23.296875,25.0375 22.984375,25.20625 C16.9878159,28.0137749 13.0036833,33.8725115 12.596875,40.48125 C12.9530188,47.2300376 17.0237278,53.2241628 23.165625,56.04375 L23.165625,56.04375 L25.571875,57.35 L21.821875,63.50625 L25.659375,65.728125 L29.940625,58.684375 L31.70625,58.996875 C33.5776828,59.3399984 35.4755374,59.5188046 37.378125,59.53125 C39.279727,59.5378594 41.1783794,59.3810323 43.053125,59.0625 L43.053125,59.0625 L44.821875,58.75 L49.00625,65.871875 L52.871875,63.684375 L49.196875,57.475 L51.61875,56.203125 C55.67943,54.1947228 58.9718008,50.9133265 60.99375,46.859375 L60.99375,46.859375 L61.5625,45.625 L67.1625,44.596875 L67.190625,39.284375 L62.2625,38.178125 L61.8375,36.6875 C60.6374632,32.8239568 58.1940715,29.4653918 54.8875,27.134375 L54.8875,27.134375 L53.75,26.28125 L54.225,19.225 L47.4625,23.271875 L45.671875,22.74375 L46.509375,19.73125 L47.03125,19.8875 L57.7625,13.46875 Z M50.0060276,31.4146827 L53.1309738,31.4330086 L53.1036866,36.0860536 L49.9787404,36.0677277 L50.0060276,31.4146827 Z M34.1875557,4.93312945 L34.53125,4.934375 C38.8024428,5.03355598 42.5752508,7.74313964 44.0336298,11.7588657 C45.4920089,15.7745918 44.3371716,20.2737333 41.125,23.090625 L41.125,23.090625 L40.64375,23.515625 L40,23.478125 C36.7794727,23.3132068 33.5532975,23.6645202 30.44375,24.51875 L30.44375,24.51875 L29.81875,24.6875 L29.265625,24.375 C26.3706698,22.7878402 24.4079418,19.9133851 23.9835443,16.6392854 C23.5591469,13.3651858 24.724134,10.085308 27.11875,7.8125 C29.1135941,5.91353037 31.7776273,4.87913975 34.53125,4.934375 Z M34.446875,8.06560829 L34.265625,8.06560829 C32.4026291,8.06161464 30.6105371,8.77957149 29.265625,10.06875 L29.265625,10.06875 L29.271875,10.05625 C27.6769553,11.5707321 26.8602353,13.7301901 27.0537634,15.9210738 C27.2472915,18.1119576 28.4299153,20.0948069 30.265625,21.30625 C33.2830004,20.5437064 36.3926021,20.2091823 39.503125,20.3125 C41.4933704,18.2426672 42.071055,15.1916645 40.9752609,12.5375131 C39.8794668,9.88336161 37.3176461,8.12853651 34.446875,8.06560829 L34.446875,8.06560829 Z" id="icon" fill="#e7e74f"/>
+                  </g>
+              </g>
+          </g>
+        </svg>
+        <p>Tools that help make savings simple</p>
+      </div>
+    </a>
+
+    <a href="https://bettermoneyhabits.bankofamerica.com/en/debt/how-to-pay-off-credit-card-debt-fast?cm_mmc=EBZ-FinancialEducation-_-Module-Ad-_-EF16LT00D0_BMH_Homepage-Tile-2-_-BAC.com-Education-Tiles" class="flex flex-col relative overflow-hidden w-full md:w-1/4 group cursor-pointer">
+      <img src="{% static 'images/credit.jpg' %}" alt="savings" class="duration-700 w-full object-contain group-hover:scale-105">
+      <div class="absolute bottom-6 right-0 left-0 bg-dark/60 duration-700 group-hover:bg-dark/80 flex items-center p-4 w-[90%] mx-auto space-x-4 text-primary rounded-md">
+        <svg width="75px" height="75px" viewBox="0 0 75 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>credit-icon</title>
+            <g id="credit-icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="icons/finance/cashflow-copy-2">
+                    <g id="Group" fill="#FFFFFF" opacity="0">
+                        <g id="icon-bounding-box">
+                            <rect id="Ø-library-elements/Icons/icon-bounding-box" x="0" y="0" width="75" height="75"/>
+                        </g>
+                    </g>
+                    <path d="M68.75,15.625 L68.75,59.375 L6.25,59.375 L6.25,15.625 L68.75,15.625 Z M26.290625,18.75 L9.375,18.75 L9.375,56.25 L26.290625,56.25 C19.6769871,52.3186696 15.6236468,45.1938654 15.6236468,37.5 C15.6236468,29.8061346 19.6769871,22.6813304 26.290625,18.75 L26.290625,18.75 Z M37.5,18.75 C27.1489451,18.7603356 18.7603356,27.1489451 18.75,37.5 C18.75,47.8553391 27.1446609,56.25 37.5,56.25 C47.8553391,56.25 56.25,47.8553391 56.25,37.5 C56.25,27.1446609 47.8553391,18.75 37.5,18.75 Z M65.625,18.75 L48.709375,18.75 C55.3230129,22.6813304 59.3763532,29.8061346 59.3763532,37.5 C59.3763532,45.1938654 55.3230129,52.3186696 48.709375,56.25 L48.709375,56.25 L65.625,56.25 L65.625,18.75 Z M39.0625,26.5625 L39.0625,35.9375 L48.4375,35.9375 L48.4375,39.0625 L39.0625,39.0625 L39.0625,48.4375 L35.9375,48.4375 L35.9375,39.0625 L26.5625,39.0625 L26.5625,35.9375 L35.9375,35.9375 L35.9375,26.5625 L39.0625,26.5625 Z" id="icon" fill="#e7e74f"/>
+                </g>
+            </g>
+        </svg>
+        <p>4 Strategies to pay off credit card loans</p>
+      </div>
+    </a>
+
+    <a href="https://bettermoneyhabits.bankofamerica.com/en/taxes-income/new-job-checklist?cm_mmc=EBZ-FinancialEducation-_-Module-Ad-_-EF16LT00D2_BMH_Homepage-Tile-4-_-BAC.com-Education-Tiles%C2%A0" class="flex flex-col relative overflow-hidden w-full md:w-1/4 group cursor-pointer">
+      <img src="{% static 'images/job.jpg' %}" alt="savings" class="duration-700 w-full object-contain group-hover:scale-105">
+      <div class="absolute bottom-6 right-0 left-0 bg-dark/60 duration-700 group-hover:bg-dark/80 flex items-center p-4 w-[90%] mx-auto space-x-4 text-primary rounded-md">
+        <svg width="75px" height="75px" viewBox="0 0 75 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>work-icon</title>
+          <g id="work-icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Group" transform="translate(-0.000000, 0.000000)">
+                  <g id="icons/finance/cashflow-copy-3" transform="translate(-0.000000, 0.000000)">
+                      <g id="Group" fill="#FFFFFF" opacity="0">
+                          <g id="icon-bounding-box">
+                              <rect id="Ø-library-elements/Icons/icon-bounding-box" x="0" y="0" width="75" height="75"></rect>
+                          </g>
+                      </g>
+                      <path d="M62.946875,18.75 L47.059375,18.75 C46.50625,15.1375 44.215625,12.5 41.3875,12.5 L33.6125,12.5 C30.8,12.5 28.49375,15.1375 27.940625,18.75 L12.053125,18.75 C8.85079362,18.7534411 6.25516598,21.3476709 6.25,24.55 L6.25,56.7 C6.25516598,59.9023291 8.85079362,62.4965589 12.053125,62.5 L62.946875,62.5 C66.1492064,62.4965589 68.744834,59.9023291 68.75,56.7 L68.75,24.55 C68.744834,21.3476709 66.1492064,18.7534411 62.946875,18.75 Z M33.6125,15.625 L41.3875,15.625 C42.375,15.625 43.44375,16.875 43.86875,18.75 L31.13125,18.75 C31.5625,16.875 32.625,15.625 33.6125,15.625 Z M60.8,21.875 L59.128125,50 L56.25,50 L56.25,46.875 L53.125,46.875 L53.125,50 L21.875,50 L21.875,46.875 L18.75,46.875 L18.75,50 L15.771875,50 L14.2375,21.875 L60.8,21.875 Z M65.625,56.7 C65.6232755,58.1778671 64.4247431,59.375 62.946875,59.375 L12.053125,59.375 C10.5752569,59.375 9.37672447,58.1778671 9.375,56.7 L9.375,24.55 C9.375,23.4337641 10.0713922,22.436037 11.11875,22.05 L12.8125,53.125 L18.75,53.125 L18.75,56.25 L21.875,56.25 L21.875,53.125 L53.125,53.125 L53.125,56.25 L56.25,56.25 L56.25,53.125 L62.065625,53.125 L63.9125,22.06875 C64.9400057,22.4640385 65.6198675,23.4490937 65.625,24.55 L65.625,56.7 Z" id="icon" fill="#e7e74f"></path>
+                  </g>
+              </g>
+          </g>
+        </svg>
+        <p>New Job? Make the most of your employee benefits</p>
+      </div>
+    </a>
+
+    <a href="https://bettermoneyhabits.bankofamerica.com/en/college/paying-off-student-loans?cm_mmc=EBZ-FinancialEducation-_-Module-Ad-_-EF16LT00D1_BMH_Homepage-Tile-3-_-BAC.com-Education-Tiles" class="flex flex-col relative overflow-hidden w-full md:w-1/4 group cursor-pointer">
+      <img src="{% static 'images/school.jpg' %}" alt="savings" class="duration-700 w-full object-contain group-hover:scale-105">
+      <div class="absolute bottom-6 right-0 left-0 bg-dark/60 duration-700 group-hover:bg-dark/80 flex items-center p-4 w-[90%] mx-auto space-x-4 text-primary rounded-md">
+        <svg width="75px" height="75px" viewBox="0 0 75 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>loans-icon</title>
+          <g id="loans-icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Group" transform="translate(-0.000000, 0.000000)">
+                  <g id="icons/finance/cashflow-copy-4" transform="translate(-0.000000, 0.000000)">
+                      <g id="Group" fill="#FFFFFF" opacity="0">
+                          <g id="icon-bounding-box">
+                              <rect id="Ø-library-elements/Icons/icon-bounding-box" x="0" y="0" width="75" height="75"></rect>
+                          </g>
+                      </g>
+                      <path d="M56.25,6.25 L56.25,25 L53.125,25 L53.125,9.375 L9.375,9.375 L9.375,65.625 L53.125,65.625 L53.125,53.125 L56.25,53.125 L56.25,68.75 L6.25,68.75 L6.25,6.25 L56.25,6.25 Z M63.15,23.6687331 C64.5993274,23.7113905 65.9794482,24.2982486 67.015625,25.3125 C68.0789064,26.3181477 68.7022064,27.7028843 68.75,29.165625 C68.7776882,30.2330924 68.3770772,31.2672541 67.6375,32.0375 L67.6375,32.0375 L46.475,53.684375 L38.75,54.2375 L39.11875,46.5 L60.296875,24.846875 C61.0529673,24.0897212 62.0799777,23.6656435 63.15,23.6687331 Z M63.1875,26.803125 C62.9496054,26.7941855 62.7175821,26.8782519 62.540625,27.0375 L62.540625,27.0375 L42.18125,47.834375 L42.040625,50.86875 L45.071875,50.65 L65.40625,29.85 C65.5613947,29.6690611 65.6398699,29.4347566 65.625,29.196875 C65.5799422,28.5670563 65.2946693,27.9786109 64.828125,27.553125 L64.828125,27.553125 L64.6739855,27.4174438 C64.2509023,27.0718602 63.7341227,26.8573572 63.1875,26.803125 Z M31.25,14.0625 L31.25,19.15625 C34.9646067,19.3589755 37.9784818,22.2362782 38.353125,25.9375 L38.353125,25.9375 L38.353125,26.809375 L35.228125,26.825 L35.228125,25.9375 C35.228125,23.896875 32.690625,22.16875 29.6875,22.16875 C26.684375,22.16875 24.146875,23.896875 24.146875,25.9375 C24.146875,26.75625 24.146875,28.98125 29.875,29.703125 C35.5,30.403125 38.353125,32.71875 38.353125,36.578125 C37.9712952,40.2732111 34.9592851,43.1421077 31.25,43.34375 L31.25,43.34375 L31.25,48.4375 L28.125,48.4375 L28.125,43.34375 C24.4220834,43.1434252 21.412302,40.2845963 21.021875,36.596875 L21.021875,36.596875 L21.021875,35.709375 L24.146875,35.709375 L24.146875,36.596875 C24.146875,38.6375 26.684375,40.365625 29.6875,40.365625 C32.690625,40.365625 35.228125,38.6375 35.228125,36.596875 C35.228125,35.759375 35.228125,33.534375 29.4875,32.8125 C23.871875,32.1125 21.021875,29.8 21.021875,25.9375 C21.3965182,22.2362782 24.4103933,19.3589755 28.125,19.15625 L28.125,19.15625 L28.125,14.0625 L31.25,14.0625 Z" id="icon" fill="#e7e74f"></path>
+                  </g>
+              </g>
+          </g>
+        </svg>
+        <p>5 Ways to pay off your student loans faster</p>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="w-full text-center items-center">
+    <p class="text-sm font-bold pb-6">Explore more topics and build your financial know-how</p>
+    <a href="https://bettermoneyhabits.bankofamerica.com/en" class="hover:bg-dark hover:text-light duration-700 rounded-md py-5 text-xl font-black block px-8 bg-primary text-dark">Visit Better Money Habits®</a>
+  </div>
+</section>
+
+<section class="md:flex md:items-center md:justify-between w-screen h-min md:h-[40vh]" style="background-image: url({% static 'images/bg.jpg' %}); background-position: cover;">
+  <div class="w-1/2 px-14 h-min space-y-6 text-light">
+    <h3 class="text-3xl md:text-5xl font-black">Secure your goals with OHFinance Life Plan</h3>
+    <p>—an easy way to set and track short- and long‑term financial goals, get personalized advice when you need it most and more.</p>
+  </div>
+  <div class="flex-grow h-full relative">
+    <img src="{% static 'images/phone.png' %}" alt="" class="absolute right-14 bottom-0">
+  </div>
+</section>
+{% endblock content %}
+
+
+{% block inline_javascript %}
+<script>
+  function myFunction() {
+    let email = document.getElementById("email").value;
+    return email;
+  }
+</script>
+{% endblock inline_javascript %}

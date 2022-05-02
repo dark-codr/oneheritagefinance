@@ -1,0 +1,60 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+
+<header class="hidden lg:flex w-screen py-4 bg-lemon-700 px-6 fixed top-0 left-0">
+  <div class="container w-full flex justify-between items-center font-black font-dongle mx-auto">
+    <div class="min-w-24 flex space-x-1">
+      <img src="{% static 'images/favicons/logo.svg' %}" alt="OneHeritageFinance Logo">
+      <span>OHF</span>
+    </div>
+    <nav class="uppercase text-xs">
+      <ul id="metismenu" class="flex items-center space-x-4">
+        <li class="mm-active">
+          <a href="{% url 'home' %}">Home</a>
+        </li>
+        <li>
+          <a href="{% url 'about' %}">About</a>
+        </li>
+        <li>
+          <a href="{% url 'about' %}">Loans</a>
+        </li>
+        <li>
+          <a href="{% url 'about' %}">Accounts</a>
+        </li>
+        <li>
+          <a href="{% url 'about' %}">Cards</a>
+        </li>
+        <li>
+          <a href="{% url 'about' %}">Contacts</a>
+        </li>
+        <li>
+          <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="/" />
+
+            <select class="selectpicker" name="language" style="width: auto;" onchange="this.form.submit()">
+              {% for language in languages %}
+
+                  <option
+                    class="flex items-center"
+                    value="{{ language.code }}"
+                    {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}
+                    data-content='
+                    <span style="display:inline-block; width:250px; padding-left: 10px; text-shadow:none">
+                      <img src="/static/images/flags/gif/[{{ language.code }}].gif"><span style="color:#999;">[{{ language.code|upper }}]</span>
+                    </span>
+                    '>
+                    <img src="/static/images/flags/gif/[{{ language.code }}].gif">
+                    <span>{{ language.code|upper }}</span>
+                  </option>
+
+              {% endfor %}
+            </select>
+          </form>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

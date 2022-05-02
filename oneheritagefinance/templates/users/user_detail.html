@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}User: {{ object.username }}{% endblock %}
+
+{% block content %}
+{% if object %}
+<section class="grid grid-cols-1 md:grid-cols-4 w-screen h-min px-3 md:px-14 py-10 gap-5 pt-20">
+  {% for acc in object.account.all %}
+  <div class="w-full shadow-md bg-dark text-white p-6 flex-none space-y-3">
+    <h3 class="text-base font-bold flex flex-row justify-between"><strong class="font-bold flex">{{acc.currency|upper}}</strong> <strong class="flex font-black text-primary font-sans"><span class="uppercase text-white font-raleway pr-3">ACC. No.: </span> {{acc.acc_no}}</strong></h3>
+    <h2 class="font-black text-primary text-3xl">{{acc.balance}}</h2>
+  </div>
+  {% endfor %}
+</section>
+{% endif %}
+
+<section class="w-screen md:space-y- 0 md:space-x-4 flex md:flex-row flex-col md:space-y-0 space-y-4 h-min px-3 md:px-14 py-10">
+  <div class="w-full md:w-1/3 flex-none rounded-md space-y-4">
+    <div class="p-6 w-full bg-dark text-light space-y-4">
+      <h3 class="text-xs text-primary font-bold uppercase">Account Details</h3>
+      <div class="w-full bg-dark text-light divide-y-2 divide-light space-y-4">
+        <div class="flex flex-row items-center justify-between pt-3"><strong class="text-base font-black text-primary uppercase flex">name</strong><span class="flex text-xl text-right">{{object.name|upper}}</span></div>
+        <div class="flex flex-row items-center justify-between pt-3"><strong class="text-base font-black text-primary uppercase flex">email</strong><span class="flex text-xl text-right">{{object.email}}</span></div>
+        <div class="flex flex-row items-center justify-between pt-3"><strong class="text-base font-black text-primary uppercase flex">username</strong><span class="flex text-xl text-right">{{object.username|upper}}</span></div>
+        <div class="flex flex-row items-center justify-between pt-3"><strong class="text-base font-black text-primary uppercase flex">account type</strong><span class="flex text-xl text-right">{{object.account_type|upper}}</span></div>
+        <div class="flex flex-row items-center justify-between pt-3"><strong class="text-base font-black text-primary uppercase flex">bank routing</strong><span class="flex text-xl text-right">{{object.route_no|upper}}</span></div>
+        <div class="flex flex-row items-center justify-between pt-3"><strong class="text-base font-black text-primary uppercase flex">bank swift</strong><span class="flex text-xl text-right">{{object.swift_code|upper}}</span></div>
+        <div class="flex flex-row items-center justify-between pt-3"><strong class="text-base font-black text-primary uppercase flex">verified</strong><span class="flex text-xl text-right">{{object.is_active|upper}}</span></div>
+      </div>
+      <button hx-push-url="/{{LANGUAGE_CODE}}/" hx-get="{% url 'account_logout' %}" hx-swap="innerHTML" hx-target="#main" class="w-full rounded-md bg-primary text-dark px-2 py-3 font-black hover:bg-primary/60 duration-500">LOGOUT</button>
+    </div>
+    <div class="p-6 w-full bg-dark text-light space-y-4">
+      <h3 class="text-xs text-primary font-bold uppercase">Transact / Debit</h3>
+      <form class="w-full bg-dark text-light space-y-4" id="transact">
+        <select title="debit type" name="transfer_type" class="w-full flex" hx-get="{% url 'transactions:check_tf' %}" hx-target="#tf_res" hx-trigger="change">
+          <option selected>Select Transaction Type</option>
+          <option value="International" class="text-white">International</option>
+          <option value="Local" class="text-white">Local</option>
+        </select>
+
+        <select title="debit account" name="account" class="w-full flex" hx-get="{% url 'transactions:check_acc' %}" hx-target="#acc_pin" hx-trigger="change">
+          <option selected>Select Your Account</option>
+          {% for account in object.account.all %}
+          <option value="{{account.acc_no}}" class="text-white">{{account.acc_no}} - {{account.currency}}</option>
+          {% endfor %}
+        </select>
+
+        <div class="w-full flex flex-col" id="tf_res">
+        </div>
+        <input type="number" id="amount" name="amount" placeholder="Amount" min="50" max="1000000"  class="w-full flex">
+        <input type="text" name="purpose" placeholder="Purpose"  class="w-full flex">
+
+        <div class="w-full flex" id="acc_pin">
+        </div>
+
+
+        <div class="w-full flex" id="pin_res">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="flex-grow overflow-x-scroll scrollbar-hide bg-primary text-dark rounded-md p-6 space-y-4">
+    <h3 class="text-xs text-dark/50 font-bold uppercase">Transaction History</h3>
+    <table class="table-fixed flex-none w-full h-min bg-light-text p-4 overflow-y-scroll text-sm scrollbar-hide border-2 border-dark/60">
+      <thead class=" flex-none w-full overflow-x-scroll bg-dark text-sm scrollbar-hide">
+        <tr class="text-white/60">
+          <th class=" flex-none py-3 w-[40px]">#</th>
+          <th class=" flex-none py-3 w-[120px]">Account</th>
+          <th class=" flex-none py-3 w-[120px]">Transaction Type</th>
+          <th class=" flex-none py-3 w-[120px]">Description</th>
+          <th class=" flex-none py-3 w-[120px]">Status</th>
+          <th class=" flex-none py-3 w-[120px]">Amount</th>
+          <th class=" flex-none py-3 w-[180px]">Date</th>
+        </tr>
+      </thead>
+      <tbody class=" flex-none w-full h-min odd:bg-white/30 text-dark text-center p-4 overflow-x-scroll scrollbar-hide">
+        {% for r in object.history.all %}
+        <tr>
+          <td class=" flex-none border-2 border-dark py-3 font-black text-sm w-[40px]">{{forloop.counter}}</td>
+          <td class=" flex-none border-2 border-dark py-3 w-[120px] font-black text-dark">{{r.account.acc_no}}</td>
+          <td class=" flex-none border-2 border-dark py-3 w-[120px] {% if r.status == 'Verified' %}text-green-600{% elif r.status == 'Pending' %}text-blue-500{% else %}text-red-500{% endif %} font-semibold">{{ r.transfer_type }}</td>
+          <td class=" flex-none border-2 border-dark py-3 w-[120px] {% if r.status == 'Verified' %}text-green-600{% elif r.status == 'Pending' %}text-blue-500{% else %}text-red-500{% endif %} font-semibold">{{ r.purpose }}</td>
+          <td class=" flex-none border-2 border-dark py-3 w-[120px] {% if r.status == 'Verified' %}text-green-600{% elif r.status == 'Pending' %}text-blue-500{% else %}text-red-500{% endif %} font-semibold">{{ r.status }}</td>
+          <td class=" flex-none border-2 border-dark py-3 w-[120px] {% if r.status == 'Verified' %}text-green-600{% elif r.status == 'Pending' %}text-blue-500{% else %}text-red-500{% endif %} font-semibold">{{r.account.currency}} {{ r.amount|floatformat:2 }}</td>
+          <td class=" flex-none border-2 border-dark py-3 w-[180px] {% if r.status == 'Verified' %}text-green-600{% elif r.status == 'Pending' %}text-blue-500{% else %}text-red-500{% endif %} font-semibold">{{ r.created|date:"d - m - Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr class="w-full h-min py-4 px-8 text-center">
+          <td colspan="7" class="flex-none  py-3 w-full font-black text-center uppercase">
+            No Transaction History
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+</section>
+{% endblock content %}
