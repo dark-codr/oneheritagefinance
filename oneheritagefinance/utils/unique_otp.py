@@ -18,10 +18,14 @@ def unique_online_pin_generator(instance, new_pin=None):
         pin = random_integer_generator(size=4)
 
     Klass = instance.__class__
-    return Klass.objects.filter(user=instance.user, currency=instance.currency).update(
-        pin=pin
-    )
-
+    # return Klass.objects.filter(user=instance.user, currency=instance.currency).update(
+    #     pin=pin
+    # )
+    # return unique_online_pin_generator(
+    #     instance,
+    #     new_pin=pin
+    # )
+    return pin
 
 def unique_acc_no(instance, new_acc_no=None):
     """

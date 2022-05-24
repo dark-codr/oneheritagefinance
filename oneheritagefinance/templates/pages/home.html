@@ -23,10 +23,10 @@
     <form class="w-full h-min space-y-6">
       {% csrf_token %}
       <div class="w-full h-7 rounded-md flex-col">
-        <input class="w-full rounded-md ring-1 focus:ring-2 focus:ring-primary focus:outline-2 focus:outline-primary" type="email" id="email" name="email" placeholder="name@mail.com">
+        <input class="w-full text-black rounded-md ring-1 focus:ring-2 focus:ring-primary focus:outline-2 focus:outline-primary" type="email" id="email" name="email" placeholder="name@mail.com">
       </div>
       <div class="w-full h-7 rounded-md flex-col">
-        <input class="w-full rounded-md ring-1 focus:ring-2 focus:ring-primary focus:outline-2 focus:outline-primary" type="password" id="password" name="password" placeholder="*************">
+        <input class="w-full text-black rounded-md ring-1 focus:ring-2 focus:ring-primary focus:outline-2 focus:outline-primary" type="password" id="password" name="password" placeholder="*************">
       </div>
 
       <button hx-push-url="/{{LANGUAGE_CODE}}/users/" hx-post="{% url 'users:login' %}" hx-swap="innerHTML" hx-target="#main" class="w-full rounded-md bg-primary text-dark px-2 py-3 font-black hover:bg-primary/60 duration-700">{% trans "Login to Account" %}</button>

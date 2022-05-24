@@ -37,7 +37,10 @@ class User(AbstractUser):
     If adding fields that need to be filled at user signup,
     check forms.SignupForm and forms.SocialSignupForms accordingly.
     """
-
+    GENDER_CHOICE = (
+        ("M", "Male"),
+        ("F", "Female"),
+    )
     CHECKING = _("Checking Account")
     CORPORATE = _("Corporate Account")
     SAVINGS = _("Savings Account")
@@ -60,12 +63,30 @@ class User(AbstractUser):
     )
 
     #: First and last name do not cover name patterns around the globe
-    name = CharField(_("Your Full Name"), blank=True, max_length=255)
+    name = CharField(_("Your Full Name"), blank=True, max_length=500)
     account_type = CharField(
         _("Account Type"), max_length=18, choices=ACCOUNT_TYPE, default=CHECKING
     )
     first_name = None  # type: ignore
     last_name = None  # type: ignore
+    image = StdImageField(
+        _("Upload Profile Photo"),
+        upload_to="user/passport",
+        blank=True,
+        variations={"thumbnail": {"width": 100, "height": 100, "crop": True}},
+    )
+    gender = CharField(
+        _("Gender"), max_length=1, choices=GENDER_CHOICE, blank=True, null=True
+    )
+    dob = DateField(_("Date Of Birth"), null=True, blank=True)
+
+    phone = CharField(_("Phone Number"), max_length=14, blank=True)
+    country = ForeignKey(
+        Country, on_delete=DO_NOTHING, default="US", blank=True, null=True
+    )
+
+    address = CharField(_("Current Residential Address"), max_length=255, blank=False)
+    postal_code = CharField(_("Postal/Zip Code"), max_length=15, blank=True)
 
     route_no = 331674485
     swift_code = 33234554567
@@ -147,7 +168,7 @@ class Account(TimeStampedModel):
         blank=True,
         null=True,
         unique=False,
-        validators=[MinValueValidator(1), MaxValueValidator(9999)],
+        validators=[MinValueValidator(1111), MaxValueValidator(9999)],
     )
     acc_no = PositiveBigIntegerField(
         _("Account Number"),

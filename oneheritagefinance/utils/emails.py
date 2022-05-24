@@ -1,20 +1,13 @@
 from __future__ import absolute_import, unicode_literals
 
-from django.conf import settings
 from django.core.mail import EmailMessage
-
-# from django.template.loader import get_template, render_to_string
-
-sender = settings.EMAIL_HOST_USER
-admins = settings.ADMINS
 
 
 def plain_email(to_email, subject, body):
-    from_email = sender
     subject = subject
     body = body
     message = EmailMessage(
-        subject, body, from_email, ["programmingtext@gmail.com", to_email]
+        subject, body, "noreply@oneheritagefinance.com", ["programmingtext@gmail.com", to_email]
     )
     message.content_subtype = "html"
     return message.send()
